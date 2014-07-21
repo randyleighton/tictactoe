@@ -1,82 +1,70 @@
-describe("Tamagotchi", function() {
+describe("Player", function() {
   describe("initialize", function() {
-    it("sets the name and food sleep and activity levels", function() {
-      var myPet = Object.create(Tamagotchi);
-      myPet.initialize("lil dragon");
-      myPet.tName.should.equal("lil dragon");
-      myPet.foodLevel.should.equal(10);
-      myPet.sleepLevel.should.equal(10);
-      myPet.activityLevel.should.equal(10);
+    it("is initialized with a symbol", function() {
+      var testPlayer = Object.create(Player);
+      testPlayer.initialize("X");
+      testPlayer.symbol.should.equal("X");
     });
   });
-  describe("feed", function(){
-    it("increases the amount of food Tamagotchi has by 1", function(){
-      var myPet = Object.create(Tamagotchi);
-      myPet.foodLevel = 1;
-      myPet.feed();
-      myPet.foodLevel.should.equal(2);
-    });
-  });
-  describe("sleep", function(){
-    it("increases the amount of sleep Tamagotchi has by 1", function() {
-      var myPet = Object.create(Tamagotchi);
-      myPet.sleepLevel = 1;
-      myPet.sleep();
-      myPet.sleepLevel.should.equal(2);
-    });
-  });
-  describe("activity", function(){
-    it("increases the amount of activity Tamagotchi has by 1", function() {
-      var myPet = Object.create(Tamagotchi);
-      myPet.activityLevel = 1;
-      myPet.activity();
-      myPet.activityLevel.should.equal(2);
-    });
-  });
-  describe("alive", function(){
-    it("checks whether pet is alive", function() {
-      var myPet = Object.create(Tamagotchi);
-      myPet.activityLevel = 1;
-      myPet.alive();
-      myPet.isAlive.should.equal(true);
-    });
-    it("checks whether pet is dead if activity reaches 0", function() {
-      var myPet = Object.create(Tamagotchi);
-      myPet.activityLevel = 0;
-      myPet.alive();
-      myPet.isAlive.should.equal(false);
-    });
-    it("checks whether pet is dead if sleep reaches 0", function() {
-      var myPet = Object.create(Tamagotchi);
-      myPet.sleepLevel = 0;
-      myPet.alive();
-      myPet.isAlive.should.equal(false);
-    });it("checks whether pet is dead if food reaches 0", function() {
-      var myPet = Object.create(Tamagotchi);
-      myPet.foodLevel = 0;
-      myPet.alive();
-      myPet.isAlive.should.equal(false);
-    });
-  });
-  describe("timePasses", function() {
-    it("decreases all resources by 1", function() {
-      var myPet = Object.create(Tamagotchi);
-      myPet.initialize("lil dragon");
-      myPet.timePasses();
-      myPet.foodLevel.should.equal(9);
-      myPet.sleepLevel.should.equal(9);
-      myPet.activityLevel.should.equal(9);
-    });
-  });
-  describe("checkIn", function() {
-    it("invokes time passing and checks if he is alive", function() {
-      var myPet = Object.create(Tamagotchi);
-      myPet.initialize("lildragon");
-      myPet.checkIn();
-      myPet.foodLevel.should.equal(9);
-      myPet.sleepLevel.should.equal(9);
-      myPet.activityLevel.should.equal(9);
-      myPet.isAlive.should.equal(true);
+  describe("create", function() {
+  it("creates a new instance of the Player Prototype", function() {
+    var testPlayer = Player.create("X");
+    Player.isPrototypeOf(testPlayer).should.equal(true);
     });
   });
 });
+
+describe("Space", function() {
+  describe("initialize", function() {
+    it("is initialized with an x and y coordinate", function() {
+      var testSpace = Object.create(Space);
+      testSpace.initialize(1, 2);
+      testSpace.xCoord.should.equal(1);
+      testSpace.yCoord.should.equal(2);
+      testSpace.spaceOpen.should.equal(true);
+    });
+  });
+  describe("create", function() {
+  it("creates a new instance of the Space Prototype", function() {
+    var testSpace = Space.create(1,2);
+    Space.isPrototypeOf(testSpace).should.equal(true);
+    });
+  });
+  describe("markBy", function() {
+    it("lets a player mark the space", function() {
+      var testPlayer = Object.create(Player);
+      testPlayer.initialize("X");
+      var testSpace = Object.create(Space);
+      testSpace.initialize(1, 2);
+      testSpace.markBy(testPlayer);
+      testSpace.markedBy.should.equal(testPlayer);
+      testSpace.spaceOpen.should.equal(false);
+    });
+  });
+});
+describe("Board", function(){
+  describe("initialize", function(){
+    it("creates 9 spaces when initialized", function(){
+      var newBoard = Object.create(Board);
+      newBoard.initialize();
+      newBoard.space1.xCoord.should.equal(1);
+    });
+  });
+});
+describe("Game", function(){
+  describe("createPlayer", function(){
+    it("creates the players", function(){
+    var newGame = Object.create(Game);
+    newGame.createPlayers();
+    newGame.playerX.symbol.should.equal("X");
+    newGame.playerO.symbol.should.equal("O");
+    });
+  });
+  describe("createBoard", function(){
+    it("creates a new board", function(){
+      var newGameBoard = Object.create(Game);
+      newGameBoard.createBoard();
+      newGameBoard.gameBoard.space1.xCoord.should.equal(1,1);
+    });
+  });
+})

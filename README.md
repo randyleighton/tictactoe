@@ -7,4 +7,4 @@
 
 Basic tic tac toe game between two players
 
-Authors: Dylan Peerenboom & Jeremy Whitaker
+Authors: Dylan Peerenboom & Randy Leighton

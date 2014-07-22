@@ -48,16 +48,17 @@ describe("Board", function(){
       var newBoard = Object.create(Board);
       newBoard.initialize();
       newBoard.space1.xCoord.should.equal(1);
+      newBoard.space8.yCoord.should.equal(2);
     });
   });
 });
 describe("Game", function(){
   describe("createPlayer", function(){
     it("creates the players", function(){
-    var newGame = Object.create(Game);
-    newGame.createPlayers();
-    newGame.playerX.symbol.should.equal("X");
-    newGame.playerO.symbol.should.equal("O");
+      var newGame = Object.create(Game);
+      newGame.createPlayers();
+      newGame.playerX.symbol.should.equal("X");
+      newGame.playerO.symbol.should.equal("O");
     });
   });
   describe("createBoard", function(){
@@ -67,4 +68,21 @@ describe("Game", function(){
       newGameBoard.gameBoard.space1.xCoord.should.equal(1,1);
     });
   });
-})
+  describe("winCondition", function(){
+    it("identifies is a player has won", function(){
+      var newGame = Object.create(Game);
+      newGame.createPlayers();
+      newGame.createBoard();
+      newGame.gameBoard.space3.markBy(newGame.playerX);
+      newGame.gameBoard.space5.markBy(newGame.playerX);
+      newGame.gameBoard.space7.markBy(newGame.playerX);
+      console.log(newGame.playerX);
+      newGame.winCondition().should.equal(true);
+      newGame.gameBoard.space7.markBy(newGame.playerX);
+      newGame.gameBoard.space8.markBy(newGame.playerX);
+      console.log(newGame.winCondition());
+      newGame.gameBoard.space9.markBy(newGame.playerX);
+      newGame.winCondition().should.equal(true);
+    });
+  });
+});

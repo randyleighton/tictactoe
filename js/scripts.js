@@ -50,7 +50,107 @@ var Game = {
   },
   createBoard: function(){
     this.gameBoard = Board.create();
+  },
+  winCondition: function(){
+
+    if ( (this.gameBoard.space1.markedBy === this.playerX) &&
+         (this.gameBoard.space2.markedBy === this.playerX) &&
+         (this.gameBoard.space3.markedBy === this.playerX)){
+      return true;
+    } else if ( (this.gameBoard.space4.markedBy === this.playerX) &&
+         (this.gameBoard.space5.markedBy === this.playerX) &&
+         (this.gameBoard.space6.markedBy === this.playerX)){
+      return true;
+    }else if ( (this.gameBoard.space7.markedBy === this.playerX) &&
+         (this.gameBoard.space8.markedBy === this.playerX) &&
+         (this.gameBoard.space9.markedBy === this.playerX)){
+      return true;
+    }else if ( (this.gameBoard.space1.markedBy === this.playerX) &&
+         (this.gameBoard.space4.markedBy === this.playerX) &&
+         (this.gameBoard.space7.markedBy === this.playerX)){
+      return true;
+    }else if ( (this.gameBoard.space2.markedBy === this.playerX) &&
+         (this.gameBoard.space5.markedBy === this.playerX) &&
+         (this.gameBoard.space8.markedBy === this.playerX)){
+      return true;
+    }else if ( (this.gameBoard.space3.markedBy === this.playerX) &&
+         (this.gameBoard.space6.markedBy === this.playerX) &&
+         (this.gameBoard.space9.markedBy === this.playerX)){
+      return true;
+    }else if ( (this.gameBoard.space1.markedBy === this.playerX) &&
+         (this.gameBoard.space5.markedBy === this.playerX) &&
+         (this.gameBoard.space9.markedBy === this.playerX)){
+      return true;
+    }else if ( (this.gameBoard.space3.markedBy === this.playerX) &&
+         (this.gameBoard.space5.markedBy === this.playerX) &&
+         (this.gameBoard.space7.markedBy === this.playerX)){
+      return true;
+    }else if ( (this.gameBoard.space1.markedBy === this.playerO) &&
+         (this.gameBoard.space2.markedBy === this.playerO) &&
+         (this.gameBoard.space3.markedBy === this.playerO)){
+      return true;
+    } else if ( (this.gameBoard.space4.markedBy === this.playerO) &&
+         (this.gameBoard.space5.markedBy === this.playerO) &&
+         (this.gameBoard.space6.markedBy === this.playerO)){
+      return true;
+    }else if ( (this.gameBoard.space7.markedBy === this.playerO) &&
+         (this.gameBoard.space8.markedBy === this.playerO) &&
+         (this.gameBoard.space9.markedBy === this.playerO)){
+      return true;
+    }else if ( (this.gameBoard.space1.markedBy === this.playerO) &&
+         (this.gameBoard.space4.markedBy === this.playerO) &&
+         (this.gameBoard.space7.markedBy === this.playerO)){
+      return true;
+    }else if ( (this.gameBoard.space2.markedBy === this.playerO) &&
+         (this.gameBoard.space5.markedBy === this.playerO) &&
+         (this.gameBoard.space8.markedBy === this.playerO)){
+      return true;
+    }else if ( (this.gameBoard.space3.markedBy === this.playerO) &&
+         (this.gameBoard.space6.markedBy === this.playerO) &&
+         (this.gameBoard.space9.markedBy === this.playerO)){
+      return true;
+    }else if ( (this.gameBoard.space1.markedBy === this.playerO) &&
+         (this.gameBoard.space5.markedBy === this.playerO) &&
+         (this.gameBoard.space9.markedBy === this.playerO)){
+      return true;
+    }else if ( (this.gameBoard.space3.markedBy === this.playerO) &&
+         (this.gameBoard.space5.markedBy === this.playerO) &&
+         (this.gameBoard.space7.markedBy === this.playerO)){
+      return true;
+    }else {
+      return false;
+    }
   }
 };
 
+
+$(document).ready(function(){
+
+  var theGame = Object.create(Game);
+  var playerTurnX = true;
+  theGame.createPlayers();
+  theGame.createBoard();
+  var playerX = theGame.playerX;
+  var playerO = theGame.playerO;
+  $(".board-space").click(function() {
+    var spaceClicked = theGame.gameBoard[$(this).attr("id")];
+    var spaceClickedValue = $(this).attr("id");
+
+    if (playerTurnX && spaceClicked.spaceOpen) {
+        $("#" + spaceClickedValue).text(theGame.playerX.symbol);
+        spaceClicked.markBy(playerX);
+        playerTurnX = false;
+
+    } else if (!playerTurnX && spaceClicked.spaceOpen) {
+        $("#" + spaceClickedValue).text(theGame.playerO.symbol);
+        spaceClicked.markBy(playerO);
+        playerTurnX = true;
+    }
+    console.log(theGame.winCondition());
+    if (theGame.winCondition()){
+      alert('winner');
+    }
+  });
+
+});
 
